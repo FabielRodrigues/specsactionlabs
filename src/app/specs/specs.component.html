@@ -10,6 +10,28 @@
    </div>
  </header>
  <div class="container">
+   <div class="lista" *ngIf="!lista">
+     <div class="item flex-item-1">
+       <div class="base-copy-2">
+         <h1>{{ tempo?.main.temp }}ºC</h1>
+       </div>
+     </div>
+     <div class="item flex-item-1">
+       <h2>{{ tempo?.name }}, {{ tempo?.sys.country }} <img
+           src="http://openweathermap.org/images/flags/{{tempo?.sys.country | lowercase }}.png" />
+       </h2>
+       <p class="temperatura_max"><span>Max</span> {{ tempo?.main.temp_max}}</p>
+       <p class="temperatura_min"><span>Min</span> {{ tempo?.main.temp_min}}</p>
+     </div>
+     <div class="item flex-item-1">
+       <div class="clouds">
+         <img src='http://openweathermap.org/img/w/{{ tempo?.weather[0].icon }}.png' alt="weather" />
+       </div>
+       <div class="description">
+         {{ tempo?.weather[0].description }}
+       </div>
+     </div>
+   </div>
    <ul *ngFor="let list of lista">
      <li style="border-bottom: 5px solid #f6f6f6;">
        <div class="container">
