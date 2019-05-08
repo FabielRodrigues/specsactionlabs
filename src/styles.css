@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+ul li {
+  list-style: none;
+}
+
 body {
   background-color: #f6f6f6;
 }
@@ -19,6 +23,11 @@ header {
   display: flex;
   align-content: center;
   justify-content: space-between;
+
+}
+
+.formulario {
+  margin: 0 auto;
 }
 
 .base {
@@ -52,7 +61,7 @@ header {
   max-width: 620px;
   margin: 0 auto;
   position: relative;
-  top: -50px;
+  top: -25px;
 }
 
 .lista {

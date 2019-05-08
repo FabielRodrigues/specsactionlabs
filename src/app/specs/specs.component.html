@@ -1,22 +1,40 @@
-<div class="container">
-  <div class="lista">
-    <div class="item flex-item-1">
-      <div class="base-copy-2">
-        <h1>{{ tempo?.main.temp }}</h1>
-      </div>
-    </div>
-    <div class="item flex-item-1">
-      <h2>{{ tempo?.name }}, {{ tempo?.sys.country }}</h2>
-      <p class="temperatura_max"><span>Max</span> {{ tempo?.main.temp_max}}</p>
-      <p class="temperatura_min"><span>Min</span> {{ tempo?.main.temp_min}}</p>
-    </div>
-    <div class="item flex-item-1">
-      <div class="clouds">
-        <img src='http://openweathermap.org/img/w/{{ tempo?.weather[0].icon }}.png' alt="weather" />
-      </div>
-      <div class="description">
-        {{ tempo?.weather[0].description }}
-      </div>
-    </div>
-  </div>
-</div>
+ <header>
+   <div class="centro">
+     <h1 class="titulo">TEMPO NA SUA CIDADE</h1>
+   </div>
+   <div class="centro">
+     <form class="formulario" method="POST" (ngSubmit)="onSubmit(q)" #q="ngForm" novalidate>
+       <input type="text" name="city" ngModel required #city="ngModel" placeholder="Digite o nome da cidade"
+         class="base" />
+     </form>
+   </div>
+ </header>
+ <div class="container">
+   <ul *ngFor="let list of lista">
+     <li style="border-bottom: 5px solid #f6f6f6;">
+       <div class="container">
+         <div class="lista">
+           <div class="item flex-item-1">
+             <div class="base-copy-2">
+               <h1>{{ list?.main.temp }}ºC</h1>
+             </div>
+           </div>
+           <div class="item flex-item-1">
+             <h2>{{ list?.name }}, {{ list?.sys.country }} <img
+                 src="http://openweathermap.org/images/flags/{{list?.sys.country | lowercase }}.png" />
+             </h2>
+             <p class="temperatura_max"><span>Max</span> {{ list?.main.temp_max}}</p>
+             <p class="temperatura_min"><span>Min</span> {{ list?.main.temp_min}}</p>
+           </div>
+           <div class="item flex-item-1">
+             <div class="clouds">
+               <img src='http://openweathermap.org/img/w/{{ list?.weather[0].icon }}.png' alt="weather" />
+             </div>
+             <div class="description">
+               {{ list?.weather[0].description }}
+             </div>
+           </div>
+         </div>
+       </div>
+     </li>
+   </ul>
