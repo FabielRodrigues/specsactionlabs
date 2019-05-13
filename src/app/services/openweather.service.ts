@@ -6,21 +6,36 @@ import {tap} from 'rxjs/operators';
 
 export class OpenweatherService {
 
-  busca(q : string) {
-    return this
-      .http
-      .get(`http://api.openweathermap.org/data/2.5/find?q=${q}&APPID=76d1b43ba3695cfae59aa9f7dc9b4877&lang=pt_br&units=metric`)
-      .pipe(tap(console.log));
-  }
-
-  private readonly temperaturaUrl = "http://api.openweathermap.org/data/2.5/weather?q=São Paulo&APPID=76d1b43ba3695cf" +
-      "ae59aa9f7dc9b4877&lang=pt_br&units=metric";
-
   getApi = "76d1b43ba3695cfae59aa9f7dc9b4877";
+  language = "pt_br";
+  typeMetrics = "metric";
+  cityDefault = "Brasília";
 
   constructor(private http : HttpClient) {}
 
   listaAtual() {
-    return this.http.get < Array < any >> (this.temperaturaUrl);
+    return this
+      .http
+      .get(`http://api.openweathermap.org/data/2.5/weather?q=${this.cityDefault}&APPID=${this.getApi}&lang=${this.language}&units=${this.typeMetrics}`);
+  }
+
+  listaCity(id : number) {
+    return this
+      .http
+      .get(`http://api.openweathermap.org/data/2.5/weather?id=${id}&APPID=${this.getApi}&lang=${this.language}&units=${this.typeMetrics}`)
+      .pipe(tap(console.log));
+  }
+
+  busca(q : string) {
+    return this
+      .http
+      .get(`http://api.openweathermap.org/data/2.5/find?q=${q}&APPID=${this.getApi}&lang=pt_br&units=metric`);
+  }
+
+  detalhesTempo(id : number) {
+    return this
+      .http
+      .get(`https://api.openweathermap.org/data/2.5/forecast?id=${id}&APPID=${this.getApi}&lang=pt_br&units=metric`)
+      .pipe(tap(console.log));
   }
 }

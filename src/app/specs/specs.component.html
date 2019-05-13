@@ -1,62 +1,136 @@
- <header>
-   <div class="centro">
-     <h1 class="titulo">TEMPO NA SUA CIDADE</h1>
-   </div>
-   <div class="centro">
-     <form class="formulario" method="POST" (ngSubmit)="onSubmit(q)" #q="ngForm" novalidate>
-       <input type="text" name="city" ngModel required #city="ngModel" placeholder="Digite o nome da cidade"
-         class="base" />
-     </form>
-   </div>
- </header>
- <div class="container">
-   <div class="lista" *ngIf="!lista">
-     <div class="item flex-item-1">
-       <div class="base-copy-2">
-         <h1>{{ tempo?.main.temp }}ºC</h1>
-       </div>
-     </div>
-     <div class="item flex-item-1">
-       <h2>{{ tempo?.name }}, {{ tempo?.sys.country }} <img
-           src="http://openweathermap.org/images/flags/{{tempo?.sys.country | lowercase }}.png" />
-       </h2>
-       <p class="temperatura_max"><span>Max</span> {{ tempo?.main.temp_max}}</p>
-       <p class="temperatura_min"><span>Min</span> {{ tempo?.main.temp_min}}</p>
-     </div>
-     <div class="item flex-item-1">
-       <div class="clouds">
-         <img src='http://openweathermap.org/img/w/{{ tempo?.weather[0].icon }}.png' alt="weather" />
-       </div>
-       <div class="description">
-         {{ tempo?.weather[0].description }}
-       </div>
-     </div>
-   </div>
-   <ul *ngFor="let list of lista">
-     <li style="border-bottom: 5px solid #f6f6f6;">
-       <div class="container">
-         <div class="lista">
-           <div class="item flex-item-1">
-             <div class="base-copy-2">
-               <h1>{{ list?.main.temp }}ºC</h1>
-             </div>
-           </div>
-           <div class="item flex-item-1">
-             <h2>{{ list?.name }}, {{ list?.sys.country }} <img
-                 src="http://openweathermap.org/images/flags/{{list?.sys.country | lowercase }}.png" />
-             </h2>
-             <p class="temperatura_max"><span>Max</span> {{ list?.main.temp_max}}</p>
-             <p class="temperatura_min"><span>Min</span> {{ list?.main.temp_min}}</p>
-           </div>
-           <div class="item flex-item-1">
-             <div class="clouds">
-               <img src='http://openweathermap.org/img/w/{{ list?.weather[0].icon }}.png' alt="weather" />
-             </div>
-             <div class="description">
-               {{ list?.weather[0].description }}
-             </div>
-           </div>
-         </div>
-       </div>
-     </li>
-   </ul>
+<header>
+  <div class="centro">
+    <h1 class="titulo">TEMPO NA SUA CIDADE</h1>
+  </div>
+  <div class="centro">
+    <form class="formulario" method="POST" (ngSubmit)="onSubmit(q)" #q="ngForm">
+      <input type="text" name="city" ngModel required #city="ngModel" placeholder="Digite o nome da cidade"
+        class="base" />
+    </form>
+  </div>
+</header>
+<div class="container">
+  <!-- Cidade Padrão -->
+  <!--<div class="lista" *ngIf="!lista" style="position:relative; top:-25px;">
+    <div class="item flex-item-1">
+      <div class="base-copy-2">
+        <h1>{{ tempo?.main.temp }}ºC</h1>
+      </div>
+    </div>
+    <div class="item flex-item-1">
+      <h2>
+        {{ tempo?.name }}, {{ tempo?.sys.country }} &nbsp;
+        <img
+          src="http://openweathermap.org/images/flags/{{
+            tempo?.sys.country | lowercase
+          }}.png"
+        />
+      </h2>
+      <p class="temperatura_max"><span>Max</span> {{ tempo?.main.temp_max }}</p>
+      <p class="temperatura_min"><span>Min</span> {{ tempo?.main.temp_min }}</p>
+    </div>
+    <div class="item flex-item-1">
+      <div class="clouds">
+        <img
+          src="http://openweathermap.org/img/w/{{
+            (tempo?.weather)[0].icon
+          }}.png"
+          alt="weather"
+        />
+      </div>
+      <div class="description">
+        {{ (tempo?.weather)[0].description }}
+      </div>
+    </div>
+  </div> -->
+  <!-- Lista de Cidades -->
+  <ul *ngFor="let list of lista">
+    <li *ngIf="!cidade">
+      <div class="container listaCidades">
+        <div class="lista">
+          <div class="item flex-item-1">
+            <div class="base-copy-2">
+              <h1>{{ list?.main.temp }}ºC</h1>
+            </div>
+          </div>
+          <div class="item flex-item-1">
+            <h2>
+              <a (click)="onClick(list?.id)">{{ list?.name }}, {{ list?.sys.country }}</a>&nbsp;
+              <img src="http://openweathermap.org/images/flags/{{
+                  list?.sys.country | lowercase
+                }}.png" />
+            </h2>
+            <p class="temperatura_max">
+              <span>Max</span> {{ list?.main.temp_max }}ºC
+            </p>
+            <p class="temperatura_min">
+              <span>Min</span> {{ list?.main.temp_min }}ºC
+            </p>
+          </div>
+          <div class="item flex-item-1">
+            <div class="clouds">
+              <img src="http://openweathermap.org/img/w/{{
+                  (list?.weather)[0].icon
+                }}.png" alt="weather" />
+            </div>
+            <div class="description">
+              {{ (list?.weather)[0].description }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <br />
+</div>
+
+<div class="container-2" *ngIf="tempoagora">
+  <div class="titulo-2">
+    <h1>
+      Weather in {{ tempoagora?.city.name }}, {{ tempoagora?.city.country }}
+    </h1>
+    <span>{{ currentTime | date: "dd/MM/yyyy" }}</span>
+  </div>
+
+  <div class="lista" style="position:relative; top:-25px;">
+    <div class="item">
+      <div class="base-copy-3">
+        <h1>{{ cidade?.main.temp }}ºC</h1>
+      </div>
+      <div class="base-copy-4">
+        <div class="clouds-2">
+          <img src="http://openweathermap.org/img/w/{{
+              (cidade?.weather)[0].icon
+            }}.png" alt="weather" />
+        </div>
+        <div class="description-2">
+          {{ (cidade?.weather)[0].description }}
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <p class="sub-item">
+        <span>Max</span><span class="max">{{ cidade?.main.temp_max }} ºC</span>
+      </p>
+      <p class="sub-item">
+        <span>Min</span><span class="min">{{ cidade?.main.temp_min }} ºC</span>
+      </p>
+      <p class="sub-item">
+        <span>Sunrise</span>
+        <span class="sun">{{ cidade?.sys.sunrise }}</span>
+      </p>
+      <p class="sub-item">
+        <span>Sunset</span>
+        <span class="rise">{{ cidade?.sys.sunset }}</span>
+      </p>
+    </div>
+  </div>
+  <div class="lista">
+    <h2 class="subtitulo">5 day weather forescast</h2>
+    <ul *ngFor="let listar of tempoagora?.list | slice:0:5">
+      <li>
+        {{ listar.main.temp}}
+      </li>
+    </ul>
+  </div>
+</div>
